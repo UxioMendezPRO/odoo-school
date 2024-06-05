@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  
+
+  <menuitem
+    id="student_main"
+    name="School student"
+  />
+
+
+  <menuitem
+    id="student_course"
+    name="Student"
+    parent="student_main"
+    action=""
+  />
+
+  <menuitem
+    id="student_books"
+    name="Books"
+    parent="student_main"
+    action=""
+  />
+
+  <menuitem
+    id="course_course"
+    name="Course"
+    parent="student_main"
+    action=""
+  />
+
+  <menuitem
+    id="tuition_course"
+    name="Cash Registers"
+    parent="student_main"
+    action=""
+  />
+</odoo>

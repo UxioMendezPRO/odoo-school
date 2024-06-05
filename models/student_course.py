@@ -1,5 +1,6 @@
-from odoo import fields, models, api
+from odoo import models
 
-class Student{
-  
-}
+
+class Student(models.Model):
+    _name = "student.course"
+    _description = "Student"

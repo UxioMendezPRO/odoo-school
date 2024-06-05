@@ -10,7 +10,11 @@
     "category": "Tools",
     "depends": ["base"],
     "license": "AGPL-3",
-    "data": [],
+    "application": True,
+    "data": [
+        "security/ir.model.access.csv",
+        "views/menu.xml",
+    ],
     "demo": [],
     "images": ["static/description/banner.png"],
     "installable": True,

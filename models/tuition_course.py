@@ -2,4 +2,6 @@ from odoo import models
 
 
 class Tuition(models.Model):
-    _name = "student.tuition"
+    _name = "tuition.course"
+    _description = "Tuition"
+

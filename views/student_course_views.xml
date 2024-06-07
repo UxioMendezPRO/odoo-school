@@ -18,16 +18,25 @@
     <field name="model">student.course</field>
     <field name="arch" type="xml">
       <form string="Student">
-        <group>
-          <field name="name"></field>
-          <field name="address"></field>
-          <field name="personal_file"></field>
-        </group>
-        <notebook>
-          <page string="Tuitions">
-            <field name="tuition_id"></field>
-          </page>
-        </notebook>
+        <sheet>
+          <header>
+            <button name="%(action_tuition_course_view)d"
+              type="action"
+              class="oe_stat_button"
+              icon="fa-money" string="Gastos">
+            </button>
+          </header>
+          <group>
+            <field name="name"></field>
+            <field name="address"></field>
+            <field name="personal_file"></field>
+          </group>
+          <notebook>
+            <page string="Tuitions">
+              <field name="tuition_id"></field>
+            </page>
+          </notebook>
+        </sheet>
       </form>
     </field>
   </record>

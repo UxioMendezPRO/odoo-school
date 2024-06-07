@@ -9,3 +9,5 @@ class Student(models.Model):
     address = fields.Char("Address")
     personal_file = fields.Char("Personal file")
     tuition_id = fields.One2many("tuition.course", "student_id", string="Tuitions")
+
+    

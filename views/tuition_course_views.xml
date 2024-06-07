@@ -10,7 +10,7 @@
         <field name="validity"></field>
         <field name="active"></field>
         <field name="student_id"></field>
-        <field name="course_id"></field>
+        <field name="course_id" widget="many2one"></field>
       </tree>
     </field>
   </record>
@@ -25,7 +25,7 @@
           <field name="validity"></field>
           <field name="active"></field>
           <field name="student_id"></field>
-          <field name="course_id"></field>
+          <field name="course_id" widget="many2one"></field>
         </group>
       </form>
     </field>
@@ -40,7 +40,6 @@
         <field name="validity"></field>
         <field name="active"></field>
         <field name="student_id"></field>
-        <field name="course_id"></field>
       </search>
     </field>
   </record>

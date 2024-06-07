@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="student_course_view_tree" model="ir.ui.view">
+    <field name="name">student.course.view.tree</field>
+    <field name="model">student.course</field>
+    <field name="arch" type="xml">
+      <tree string="Students">
+        <field name="name"></field>
+        <field name="address"></field>
+        <field name="personal_file"></field>
+      </tree>
+    </field>
+  </record>
+
+  <record id="student_course_view_form" model="ir.ui.view">
+    <field name="name">student.course.view.form</field>
+    <field name="model">student.course</field>
+    <field name="arch" type="xml">
+      <form string="Student">
+        <group>
+          <field name="name"></field>
+          <field name="address"></field>
+          <field name="personal_file"></field>
+        </group>
+        <notebook>
+          <page string="Tuitions">
+            <field name="tuition_id"></field>
+          </page>
+        </notebook>
+      </form>
+    </field>
+  </record>
+
+  <record id="student_course_view_search" model="ir.ui.view">
+    <field name="name">student.course.view.search</field>
+    <field name="model">student.course</field>
+    <field name="arch" type="xml">
+      <search string="Students">
+        <field name="name"></field>
+        <field name="address"></field>
+        <field name="personal_file"></field>
+      </search>
+    </field>
+  </record>
+</odoo>

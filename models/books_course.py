@@ -6,5 +6,5 @@ class Book(models.Model):
     _description = "Books"
 
     title = fields.Char("Title")
-    author = fields.Char("author")
+    author = fields.Char("Author")
     courses_id = fields.Many2many("course.course", string="Courses")

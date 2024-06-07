@@ -13,6 +13,10 @@
     "data": [
         "security/ir.model.access.csv",
         "views/menu.xml",
+        "views/books_course_views.xml",
+        "views/course_course_views.xml",
+        "views/student_course_views.xml",
+        "views/tuition_course_views.xml",
     ],
     "demo": [],
     "images": ["static/description/banner.png"],

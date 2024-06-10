@@ -33,7 +33,7 @@
           </group>
           <notebook>
             <page string="Tuitions">
-              <field name="tuition_id"></field>
+              <field name="tuition_ids"></field>
             </page>
           </notebook>
         </sheet>

@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 from datetime import datetime
 
 
@@ -18,8 +18,15 @@ class Tuition(models.Model):
 
     @api.model
     def create(self, vals):
-        if self.student_id is not None:
-            this_student = self.env["student.course"].browse(self.student_id)
-            if this_student.tuition_id.active == True:
-                raise UserError("Matrícula en activo")
+        tuitions = self.search([])
+        for tuition in tuitions:
+            if tuition.active:
+                print(tuition.validity)
+                raise UserError("Existe una matrícula en activo")
         return super(Tuition, self).create(vals)
+
+    @api.depends("validity")
+    def check_dates(self):
+        for record in self:
+            if record.validity < datetime.now():
+                raise UserError("Fecha inválida")

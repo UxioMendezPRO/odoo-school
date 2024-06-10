@@ -7,7 +7,7 @@
     <field name="arch" type="xml">
       <tree string="Courses">
         <field name="year"></field>
-        <field name="classes"></field>
+        <field name="letter"></field>
       </tree>
     </field>
   </record>
@@ -19,7 +19,7 @@
       <form string="Course">
         <group>
           <field name="year"></field>
-          <field name="classes"></field>
+          <field name="letter"></field>
         </group>
         <notebook>
           <page string="Books">
@@ -39,7 +39,7 @@
     <field name="arch" type="xml">
       <search string="Course">
         <field name="year"></field>
-        <field name="classes"></field>
+        <field name="letter"></field>
       </search>
     </field>
   </record>

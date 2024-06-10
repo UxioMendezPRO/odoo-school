@@ -22,11 +22,11 @@ class Tuition(models.Model):
         if tuitions is not None:
             for tuition in tuitions:
                 if tuition.active:
-                    raise UserError("Existe una matrícula en activo")
+                    raise UserError("There is an active tuition")
         return super(Tuition, self).create(vals)
 
     @api.onchange("validity")
     def onchange_validity(self):
         for record in self:
             if record.validity < datetime.now().date():
-                raise UserError("Fecha inválida")
+                raise UserError("Invalid date")

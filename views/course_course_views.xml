@@ -17,18 +17,26 @@
     <field name="model">course.course</field>
     <field name="arch" type="xml">
       <form string="Course">
-        <group>
-          <field name="year"></field>
-          <field name="letter"></field>
-        </group>
-        <notebook>
-          <page string="Books">
-            <field name="books_id"></field>
-          </page>
-          <page string="Tuitions">
-            <field name="tuition_ids"></field>
-          </page>
-        </notebook>
+        <sheet>
+          <header>
+            <button name="%(action_student_course_view)d"
+              type="action"
+              class="oe_stat_button"
+              icon="fa-user" string="Students"></button>
+          </header>
+          <group>
+            <field name="year"></field>
+            <field name="letter"></field>
+          </group>
+          <notebook>
+            <page string="Tuitions">
+              <field name="tuition_ids"></field>
+            </page>
+            <page string="Books">
+              <field name="books_id"></field>
+            </page>
+          </notebook>
+        </sheet>
       </form>
     </field>
   </record>

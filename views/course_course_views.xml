@@ -19,10 +19,11 @@
       <form string="Course">
         <sheet>
           <header>
-            <button name="%(action_student_course_view)d"
+            <button name="%(action_total_students_view)d"
               type="action"
               class="oe_stat_button"
-              icon="fa-user" string="Students"></button>
+              icon="fa-user" string="Students">
+              <field name="total_students"></field> Total Students</button>
           </header>
           <group>
             <field name="year"></field>
@@ -51,4 +52,14 @@
       </search>
     </field>
   </record>
+
+  <!-- Actions -->
+
+  <record model="ir.actions.act_window" id="action_total_students_view">
+    <field name="name">Students</field>
+    <field name="res_model">tuition.course</field>
+    <field name="view_mode">tree,form,search,kanban</field>
+    <field name="domain">[('course_id', '=', active_id)]</field>
+  </record>
+
 </odoo>

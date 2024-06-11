@@ -6,6 +6,7 @@ class Course(models.Model):
     _name = "course.course"
     _description = "Course"
 
+    name = fields.Char(compute="_compute_name")
     year = fields.Selection(
         string="Year",
         selection=[("1", "First"), ("2", "Second"), ("3", "Third")],
@@ -16,6 +17,14 @@ class Course(models.Model):
     )
     books_id = fields.Many2many("books.course", string="Books")
     tuition_ids = fields.One2many("tuition.course", "course_id", string="Tuitions")
+    total_students = fields.Integer(
+        compute="compute_total_students", string="Total students", store=True
+    )
+
+    @api.model
+    def _compute_name(self):
+        for record in self:
+            record.name = f"{record.year} {record.letter}"
 
     @api.model
     def get_class_info(self):
@@ -37,3 +46,10 @@ class Course(models.Model):
                     print(counter)
                     if counter > 1:
                         raise UserError("The course already exist")
+
+    @api.depends("total_students")
+    def compute_total_students(self):
+        for record in self:
+            record.total_students = 0
+            for tuition in record.tuition_ids:
+                record.total_students += 1

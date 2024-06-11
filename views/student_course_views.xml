@@ -23,9 +23,8 @@
             <button name="%(action_student_tuition_view)d"
               type="action"
               class="oe_stat_button"
-              icon="fa-money" string="Expenses">
-              <field name="expenses">Expenses</field>
-            </button>
+              icon="fa-money">
+              <field name="expenses"></field> Expenses</button>
           </header>
           <group>
             <field name="name"></field>

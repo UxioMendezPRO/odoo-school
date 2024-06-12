@@ -14,13 +14,15 @@ class Tuition(models.Model):
     )
     active = fields.Boolean("Is active", default=True)
     student_id = fields.Many2one("student.course", string="Student")
-    course_id = fields.Many2one("course.course", string="Course")
+    course_id = fields.Many2one("course.course", string="Course", required=True)
+    product_id = fields.Many2one("product.product")
 
     @api.model
     def create(self, vals):
-        tuitions = self.search([])
-        if tuitions is not None:
-            for tuition in tuitions:
+        student_id = vals.get("student_id", False)
+        this_student = self.env["student.course"].browse(student_id)
+        if this_student:
+            for tuition in this_student.tuition_ids:
                 if tuition.active:
                     raise UserError("There is an active tuition")
         return super(Tuition, self).create(vals)
@@ -30,3 +32,15 @@ class Tuition(models.Model):
         for record in self:
             if record.validity < datetime.now().date():
                 raise UserError("Invalid date")
+
+    def action_create_tuition(self):
+        tuition = self.env["sale.order"].create(
+            {
+                "partner_id": self.student_id,
+                # "sale_order_template_id": "",
+                # "validity_date": self.validity,
+                # "date_order": datetime.now(),
+                # "pricelist_id": "",
+                # "payment_term_id": "",
+            }
+        )

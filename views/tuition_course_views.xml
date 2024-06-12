@@ -20,13 +20,19 @@
     <field name="model">tuition.course</field>
     <field name="arch" type="xml">
       <form string="Tuition">
-        <group>
-          <field name="price"></field>
-          <field name="validity"></field>
-          <field name="active"></field>
-          <field name="student_id" widget="many2one"></field>
-          <field name="course_id" widget="many2one"></field>
-        </group>
+        <sheet>
+          <group>
+            <field name="price"></field>
+            <field name="validity"></field>
+            <field name="active"></field>
+            <field name="student_id" widget="many2one"></field>
+            <field name="course_id" widget="many2one"></field>
+          </group>
+        </sheet>
+        <footer>
+          <button name="action_create_tuition" type="object" string="Create tuition"
+            icon="fa-scroll"></button>
+        </footer>
       </form>
     </field>
   </record>

@@ -36,11 +36,18 @@ class Tuition(models.Model):
     def action_create_tuition(self):
         tuition = self.env["sale.order"].create(
             {
-                "partner_id": self.student_id,
-                # "sale_order_template_id": "",
-                # "validity_date": self.validity,
-                # "date_order": datetime.now(),
-                # "pricelist_id": "",
-                # "payment_term_id": "",
+                "partner_id": self.student_id.id,
+                "order_line": [
+                    (
+                        0,
+                        False,
+                        {
+                            "product_template_id": self.product_id,
+                            "name": "Tuition",
+                            "product_uom_qty": 1,
+                            "price_unit": self.price,
+                        },
+                    ),
+                ],
             }
         )

@@ -9,11 +9,11 @@ class Course(models.Model):
     name = fields.Char(compute="_compute_name")
     year = fields.Selection(
         string="Year",
-        selection=[("1", "First"), ("2", "Second"), ("3", "Third")],
+        selection=[("First", "First"), ("Second", "Second"), ("Third", "Third")],
         default="1",
     )
     letter = fields.Selection(
-        string="Class", selection=[("a", "A"), ("b", "B"), ("c", "C")], default="a"
+        string="Class", selection=[("A", "A"), ("B", "B"), ("C", "C")], default="a"
     )
     books_id = fields.Many2many("books.course", string="Books")
     tuition_ids = fields.One2many("tuition.course", "course_id", string="Tuitions")

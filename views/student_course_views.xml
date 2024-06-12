@@ -8,6 +8,7 @@
       <tree string="Students">
         <field name="name"></field>
         <field name="address"></field>
+        <field name="total_tuitions"></field>
         <field name="personal_file"></field>
       </tree>
     </field>

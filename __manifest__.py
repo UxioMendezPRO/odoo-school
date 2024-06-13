@@ -7,7 +7,10 @@
     "maintainer": "Uxío Méndez Pazos",
     "website": "https://github.com/UxioMendezPRO/odoo-school",
     "category": "Tools",
-    "depends": ["base"],
+    "depends": [
+        "base",
+        "sale",
+    ],
     "license": "AGPL-3",
     "application": True,
     "data": [

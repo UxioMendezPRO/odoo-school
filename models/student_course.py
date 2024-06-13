@@ -4,11 +4,14 @@ from odoo import fields, models, api
 class Student(models.Model):
     _name = "student.course"
     _description = "Student"
+    _sql_constraints = [
+        ("file_unique", "unique (personal_file)", "The personal file must be unique"),
+    ]
 
     name = fields.Char("Name")
     address = fields.Char("Address")
     personal_file = fields.Char("Personal file")
-    tuition_ids = fields.One2many("tuition.course", "student_id", string="Tuitions")
+    tuition_ids = fields.One2many("tuition.course", "student_id")
     expenses = fields.Float(compute="_compute_expenses", string="Expenses", store=True)
     total_tuitions = fields.Integer(
         compute="_compute_total_tuitions", string="Tuitions"

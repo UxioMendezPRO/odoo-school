@@ -15,8 +15,9 @@ class Tuition(models.Model):
     active = fields.Boolean("Is active", default=True)
     student_id = fields.Many2one("student.course", string="Student")
     course_id = fields.Many2one("course.course", string="Course", required=True)
-    product_id = fields.Many2one("product.product")
+    category_id = fields.Char(compute="_compute_category_id")
 
+    # Constrain para no tener más de una matrícula activa
     @api.model
     def create(self, vals):
         student_id = vals.get("student_id", False)
@@ -33,7 +34,23 @@ class Tuition(models.Model):
             if record.validity < datetime.now().date():
                 raise UserError("Invalid date")
 
+    @api.depends("category_id")
+    def _compute_category_id(self):
+        default_category = self.env["product.category"].search([], limit=1)
+        for record in self:
+            record.category_id = default_category.id if default_category else False
+
     def action_create_tuition(self):
+
+        product = self.env["product.product"].create(
+            {
+                "name": "Tuition",
+                "categ_id": self.category_id,
+                "list_price": self.price,
+                "standard_price": 0,
+                "type": "service",
+            }
+        )
         tuition = self.env["sale.order"].create(
             {
                 "partner_id": self.student_id.id,
@@ -42,7 +59,7 @@ class Tuition(models.Model):
                         0,
                         False,
                         {
-                            "product_template_id": self.product_id,
+                            "product_id": product.id,
                             "name": "Tuition",
                             "product_uom_qty": 1,
                             "price_unit": self.price,

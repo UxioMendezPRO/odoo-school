@@ -54,6 +54,7 @@ class Tuition(models.Model):
         tuition = self.env["sale.order"].create(
             {
                 "partner_id": self.student_id.id,
+                "validity_date": self.validity,
                 "order_line": [
                     (
                         0,

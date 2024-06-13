@@ -6,6 +6,9 @@
     <field name="model">res.partner</field>
     <field name="inherit_id" ref="base.view_partner_form" />
     <field name="arch" type="xml">
+      <field name="vat" position="replace"></field>
+      <field name="function" position="replace"></field>
+      <field name="title" position="replace"></field>
       <xpath expr="//sheet/group/group" position="inside">
         <field name="personal_file"></field>
         <field name="total_tuitions"></field>

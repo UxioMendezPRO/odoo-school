@@ -44,7 +44,7 @@
 
   <record model="ir.actions.act_window" id="action_student_course_view">
     <field name="name">Student</field>
-    <field name="res_model">student.course</field>
+    <field name="res_model">res.partner</field>
     <field name="view_mode">tree,form,search,kanban</field>
   </record>
 

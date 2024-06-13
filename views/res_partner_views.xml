@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="res_partner_form_inherit" model="ir.ui.view">
+    <field name="name">res.partner.view.form</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//sheet/group/group" position="inside">
+        <field name="personal_file"></field>
+        <field name="total_tuitions"></field>
+      </xpath>
+      <xpath expr="//notebook" position="inside">
+        <page name="tuitions">
+          <field name="tuition_ids"></field>
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

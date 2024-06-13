@@ -1,5 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 student.access_course_course,access_course_course,student.model_course_course,base.group_user,1,1,1,1
-student.access_student_course,access_student_course,student.model_student_course,base.group_user,1,1,1,1
 student.access_tuition_course,access_tuition_course,student.model_tuition_course,base.group_user,1,1,1,1
 student.access_books_course,access_books_course,student.model_books_course,base.group_user,1,1,1,1

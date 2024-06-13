@@ -13,7 +13,7 @@ class Tuition(models.Model):
         default=datetime(day=15, month=6, year=datetime.now().year + 1),
     )
     active = fields.Boolean("Is active", default=True)
-    student_id = fields.Many2one("student.course", string="Student")
+    student_id = fields.Many2one("res.partner", string="Student")
     course_id = fields.Many2one("course.course", string="Course", required=True)
     category_id = fields.Char(compute="_compute_category_id")
 
@@ -21,7 +21,7 @@ class Tuition(models.Model):
     @api.model
     def create(self, vals):
         student_id = vals.get("student_id", False)
-        this_student = self.env["student.course"].browse(student_id)
+        this_student = self.env["res.partner"].browse(student_id)
         if this_student:
             for tuition in this_student.tuition_ids:
                 if tuition.active:

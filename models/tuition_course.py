@@ -16,6 +16,7 @@ class Tuition(models.Model):
     student_id = fields.Many2one("res.partner", string="Student")
     course_id = fields.Many2one("course.course", string="Course", required=True)
     category_id = fields.Char(compute="_compute_category_id")
+    product_id = fields.Many2one("product.product", compute="_compute_product_id")
 
     # Constrain para no tener más de una matrícula activa
     @api.model
@@ -28,20 +29,25 @@ class Tuition(models.Model):
                     raise UserError("There is an active tuition")
         return super(Tuition, self).create(vals)
 
+    # La fecha debe ser posterior a la actual
     @api.onchange("validity")
     def onchange_validity(self):
         for record in self:
             if record.validity < datetime.now().date():
                 raise UserError("Invalid date")
 
+    # Crea la categoría del producto
     @api.depends("category_id")
     def _compute_category_id(self):
         default_category = self.env["product.category"].search([], limit=1)
         for record in self:
             record.category_id = default_category.id if default_category else False
 
-    def action_create_tuition(self):
-
+    # Crea la id del producto
+    @api.depends("product_id")
+    def _compute_product_id(self):
+        # product = self.env["product.product"].browse(self.product_id)
+        # if product == False:
         product = self.env["product.product"].create(
             {
                 "name": "Tuition",
@@ -51,6 +57,14 @@ class Tuition(models.Model):
                 "type": "service",
             }
         )
+        for record in self:
+            record.product_id = product
+
+    # Crea la matrícula
+    def action_create_tuition(self):
+        for record in self:
+            product = record.product_id
+        print(product.id)
         tuition = self.env["sale.order"].create(
             {
                 "partner_id": self.student_id.id,
@@ -69,3 +83,11 @@ class Tuition(models.Model):
                 ],
             }
         )
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Sales",
+            "view_mode": "form",
+            "res_model": "sale.order",
+            "res_id": tuition.id,
+            "target": "current",
+        }

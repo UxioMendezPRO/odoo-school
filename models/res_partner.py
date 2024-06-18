@@ -20,4 +20,3 @@ class ResPartner(models.Model):
             for tuition in record.tuition_ids:
                 total += 1
             record.total_tuitions = total
-    

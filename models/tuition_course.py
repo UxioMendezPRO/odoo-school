@@ -37,14 +37,6 @@ class Tuition(models.Model):
             if record.validity < datetime.now().date():
                 raise UserError("Invalid date")
 
-    # Limita las líneas de pedido a una por matrícula
-    @api.depends("order_line_id")
-    def create_order_line_id(self):
-        order_line = self.env["sale.order.line"].browse(self.order_line_id)
-        for record in self:
-            record.order_line_id = order_line
-            print("crea la linea")
-
     # Crea la categoría del producto
     @api.depends("category_id")
     def _compute_category_id(self):
@@ -67,9 +59,9 @@ class Tuition(models.Model):
         for record in self:
             record.product_id = product
 
-
     # Crea la matrícula
     def action_create_tuition(self):
+        print(self.order_line_id)
         if self.order_line_id:
             raise UserError("An order line for this tuition already exists")
         if not self.product_id:

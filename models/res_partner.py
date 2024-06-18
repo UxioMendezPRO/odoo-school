@@ -12,8 +12,10 @@ class ResPartner(models.Model):
     total_tuitions = fields.Integer(
         compute="_compute_total_tuitions", string="Tuitions"
     )
-    user_id = fields.Many2one(
-        "res.users", string="User", default=lambda self: self.env.user
+    user_id = fields.Many2one("res.users", default=lambda self: self.env.user)
+    team_id = fields.Many2one(
+        "crm.team",
+        default=lambda self: self.env.ref("sales_team.team_sales_department"),
     )
 
     @api.depends("total_tuitions")

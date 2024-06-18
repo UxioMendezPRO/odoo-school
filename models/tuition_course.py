@@ -16,7 +16,8 @@ class Tuition(models.Model):
     student_id = fields.Many2one("res.partner", string="Student")
     course_id = fields.Many2one("course.course", string="Course", required=True)
     category_id = fields.Char(compute="_compute_category_id")
-    product_id = fields.Many2one("product.product", compute="_compute_product_id")
+    product_id = fields.Many2one("product.product")
+    order_line_id = fields.Many2one("sale.order.line")
 
     # Constrain para no tener más de una matrícula activa
     @api.model
@@ -36,6 +37,14 @@ class Tuition(models.Model):
             if record.validity < datetime.now().date():
                 raise UserError("Invalid date")
 
+    # Limita las líneas de pedido a una por matrícula
+    @api.depends("order_line_id")
+    def create_order_line_id(self):
+        order_line = self.env["sale.order.line"].browse(self.order_line_id)
+        for record in self:
+            record.order_line_id = order_line
+            print("crea la linea")
+
     # Crea la categoría del producto
     @api.depends("category_id")
     def _compute_category_id(self):
@@ -45,9 +54,7 @@ class Tuition(models.Model):
 
     # Crea la id del producto
     @api.depends("product_id")
-    def _compute_product_id(self):
-        # product = self.env["product.product"].browse(self.product_id)
-        # if product == False:
+    def create_product_id(self):
         product = self.env["product.product"].create(
             {
                 "name": "Tuition",
@@ -60,11 +67,13 @@ class Tuition(models.Model):
         for record in self:
             record.product_id = product
 
+
     # Crea la matrícula
     def action_create_tuition(self):
-        for record in self:
-            product = record.product_id
-        print(product.id)
+        if self.order_line_id:
+            raise UserError("An order line for this tuition already exists")
+        if not self.product_id:
+            self.create_product_id()
         tuition = self.env["sale.order"].create(
             {
                 "partner_id": self.student_id.id,
@@ -74,7 +83,7 @@ class Tuition(models.Model):
                         0,
                         False,
                         {
-                            "product_id": product.id,
+                            "product_id": self.product_id.id,
                             "name": "Tuition",
                             "product_uom_qty": 1,
                             "price_unit": self.price,

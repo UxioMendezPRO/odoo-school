@@ -14,6 +14,7 @@
       <field name="company_type" position="replace"></field>
       <field name="website" position="replace"></field>
       <xpath expr="//page[@name='sales_purchases']" position="replace"></xpath>
+      <xpath expr="//div[@class='oe_chatter']" position="replace" />
 
 
       <!-- Se incluyen para borrar la página sin romper la vista -->

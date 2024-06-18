@@ -30,7 +30,7 @@
           </group>
         </sheet>
         <footer>
-          <button name="action_create_tuition" type="object" string="Create order"
+          <button name="action_create_tuition" type="object" string="Sale"
             icon="fa-scroll"></button>
         </footer>
       </form>

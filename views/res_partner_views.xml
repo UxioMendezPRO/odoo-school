@@ -15,12 +15,13 @@
       <field name="website" position="replace"></field>
       <xpath expr="//page[@name='sales_purchases']" position="replace"></xpath>
 
+
       <!-- Se incluyen para borrar la página sin romper la vista -->
-      <xpath expr="//form" position="inside">
-        <field name="user_id" />
-      </xpath>
-      <xpath expr="//form" position="inside">
-        <field name="team_id" />
+      <xpath expr="//sheet" position="before">
+        <header>
+          <field name="user_id" />
+          <field name="team_id" />
+        </header>
       </xpath>
 
 
@@ -29,7 +30,7 @@
         <field name="total_tuitions"></field>
       </xpath>
       <xpath expr="//notebook/page" position="before">
-        <page name="tuitions">
+        <page name="Tuitions">
           <field name="tuition_ids"></field>
         </page>
       </xpath>

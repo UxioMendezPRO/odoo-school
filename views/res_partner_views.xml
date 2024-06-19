@@ -14,9 +14,9 @@
       <field name="company_type" position="replace"></field>
       <field name="website" position="replace"></field>
       <field name="company_name" position="replace"></field>
-      <xpath expr="//page[@name='sales_purchases']" position="replace"></xpath>
       <xpath expr="//div[@class='oe_chatter']" position="replace" />
       <xpath expr="//button[@name='create_company']" position="replace"></xpath>
+      <xpath expr="//page[@name='sales_purchases']" position="replace"></xpath>
 
 
       <!-- Se incluyen para borrar la página sin romper la vista -->
@@ -28,7 +28,15 @@
         </footer>
       </xpath>
 
+      <!-- Modificación de botones -->
+      <xpath expr="//button[@name='153']" position="attributes">
+        <attribute name="string">Previous Student</attribute>
+      </xpath>
+      <xpath expr="//button[@name='154']" position="attributes">
+        <attribute name="string">Next Student</attribute>
+      </xpath>
 
+      <!-- Nuevos campos -->
       <xpath expr="//sheet/group/group" position="inside">
         <field name="personal_file"></field>
         <field name="total_tuitions"></field>

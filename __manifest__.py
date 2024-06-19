@@ -21,6 +21,7 @@
         # "views/student_course_views.xml",
         "views/tuition_course_views.xml",
         "views/res_partner_views.xml",
+        "views/sale_order_views.xml",
     ],
     "demo": [],
     "images": ["static/description/banner.png"],

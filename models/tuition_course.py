@@ -15,9 +15,8 @@ class Tuition(models.Model):
     active = fields.Boolean("Is active", default=True)
     student_id = fields.Many2one("res.partner", string="Student")
     course_id = fields.Many2one("course.course", string="Course", required=True)
-    category_id = fields.Char(compute="_compute_category_id")
+    category_id = fields.Many2one("product.category")
     product_id = fields.Many2one("product.product")
-    order_line_id = fields.Many2one("sale.order.line")
 
     # Constrain para no tener más de una matrícula activa
     @api.model
@@ -39,18 +38,30 @@ class Tuition(models.Model):
 
     # Crea la categoría del producto
     @api.depends("category_id")
-    def _compute_category_id(self):
-        default_category = self.env["product.category"].search([], limit=1)
+    def assign_category_id(self):
+        category = self.env["product.category"].search(
+            [("name", "=", "Services")], limit=1
+        )
+        print("la encuentra")
+        if not category:
+            print("no la encuentra")
+            category = self.env["product.category"].create(
+                {
+                    "name": "Services",
+                }
+            )
         for record in self:
-            record.category_id = default_category.id if default_category else False
+            record.category_id = category
 
     # Crea la id del producto
     @api.depends("product_id")
     def create_product_id(self):
+        if not self.category_id:
+            self.assign_category_id()
         product = self.env["product.product"].create(
             {
                 "name": "Tuition",
-                "categ_id": self.category_id,
+                "categ_id": self.category_id.id,
                 "list_price": self.price,
                 "standard_price": 0,
                 "type": "service",
@@ -61,11 +72,10 @@ class Tuition(models.Model):
 
     # Crea la matrícula
     def action_create_tuition(self):
-        print(self.order_line_id)
-        if self.order_line_id:
-            raise UserError("An order line for this tuition already exists")
+
         if not self.product_id:
             self.create_product_id()
+
         tuition = self.env["sale.order"].create(
             {
                 "partner_id": self.student_id.id,

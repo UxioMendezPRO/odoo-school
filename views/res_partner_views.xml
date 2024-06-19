@@ -20,16 +20,12 @@
 
 
       <!-- Se incluyen para borrar la página sin romper la vista -->
-      <xpath expr="//sheet" position="before">
-        <header>
-          <h3>
-            <field name="user_id" />
-            <span> - </span>
-            <field name="company_name" />
-            <span> - </span>
-            <field name="team_id" />
-          </h3>
-        </header>
+      <xpath expr="//sheet" position="after">
+        <footer>
+          <field name="user_id" />
+          <field name="company_name" />
+          <field name="team_id" />
+        </footer>
       </xpath>
 
 

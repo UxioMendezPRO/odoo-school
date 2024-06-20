@@ -17,6 +17,7 @@ class Tuition(models.Model):
     course_id = fields.Many2one("course.course", string="Course", required=True)
     category_id = fields.Many2one("product.category")
     product_id = fields.Many2one("product.product")
+    tax_id = fields.Many2one("account.tax", compute="_compute_tax_id")
 
     # Constrain para no tener más de una matrícula activa
     @api.model
@@ -42,9 +43,7 @@ class Tuition(models.Model):
         category = self.env["product.category"].search(
             [("name", "=", "Services")], limit=1
         )
-        print("la encuentra")
         if not category:
-            print("no la encuentra")
             category = self.env["product.category"].create(
                 {
                     "name": "Services",
@@ -70,13 +69,26 @@ class Tuition(models.Model):
         for record in self:
             record.product_id = product
 
+    @api.depends("tax_id")
+    def _compute_tax_id(self):
+        tax_id = self.env["account.tax"].create(
+            {
+                "name": "VAT 21%",
+                "amount": 21,
+                "type_tax_use": "sale",
+                "amount_type": "percent",
+            }
+        )
+        for record in self:
+            record.tax_id = tax_id
+
     # Crea la matrícula
     def action_create_tuition(self):
 
         if not self.product_id:
             self.create_product_id()
 
-        tuition = self.env["sale.order"].create(
+        sale_order = self.env["sale.order"].create(
             {
                 "partner_id": self.student_id.id,
                 "validity_date": self.validity,
@@ -89,16 +101,18 @@ class Tuition(models.Model):
                             "name": "Tuition",
                             "product_uom_qty": 1,
                             "price_unit": self.price,
+                            "tax_id": self.tax_id,
                         },
                     ),
                 ],
             }
         )
+
         return {
             "type": "ir.actions.act_window",
             "name": "Sales",
             "view_mode": "form",
             "res_model": "sale.order",
-            "res_id": tuition.id,
+            "res_id": sale_order.id,
             "target": "current",
         }

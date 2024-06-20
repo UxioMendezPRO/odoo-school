@@ -12,17 +12,12 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        tuition_id = vals.get("tuition_id", False)
-        if tuition_id:
-            tuition = self.env["tuition.course"].browse(tuition_id)
-            tuitions = self.env["tuition.course"].search([("id", "=", tuition.id)])
-            if tuitions:
-                raise UserError("A sale for this tuition already exists")
-            vals["tuition_id"] = tuition.id
+        this_tuition = self.env["tuition.course"].browse(vals.get("tuition_id", False))
+        print(this_tuition.id)
+        if this_tuition.sale_id:
+            raise UserError("A sale for this tuition already exists")
         return super(SaleOrder, self).create(vals)
 
     def action_confirm(self):
-        this_tuition = self.tuition_id
-        if this_tuition:
-            this_tuition.state = "confirmed"
+        self.tuition_id.state = "confirmed"
         return super(SaleOrder, self).action_confirm()

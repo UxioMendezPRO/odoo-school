@@ -124,8 +124,9 @@ class Tuition(models.Model):
             }
         )
         for record in self:
-            record.state = "requested"
             record.sale_id = sale_order
+            record.state = "requested"
+        sale_order.tuition_id = self.id
 
         return {
             "type": "ir.actions.act_window",

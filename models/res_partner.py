@@ -50,9 +50,10 @@ class ResPartner(models.Model):
     @api.depends("tuition_ids")
     def _compute_tuition_state(self):
         for record in self:
+            if not record.tuition_ids:
+                record.tuition_state = "new"
+
             for tuition in record.tuition_ids:
-                if tuition.state == "new":
-                    record.tuition_state = "new"
                 if tuition.state == "requested":
                     record.tuition_state = "requested"
                 if tuition.state == "confirmed":

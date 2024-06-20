@@ -12,7 +12,7 @@ class Tuition(models.Model):
         "Validity date",
         default=datetime(day=15, month=6, year=datetime.now().year + 1),
     )
-    active = fields.Boolean("Is active", default=True)
+    active = fields.Boolean("Is active", default=False)
     student_id = fields.Many2one("res.partner", string="Student")
     course_id = fields.Many2one("course.course", string="Course", required=True)
     category_id = fields.Many2one("product.category")
@@ -85,8 +85,13 @@ class Tuition(models.Model):
     # Crea la matrícula
     def action_create_tuition(self):
 
-        if not self.product_id:
+        product = self.env["product.product"].search(
+            [("name", "=", "Tuition")], limit=1
+        )
+        if not product:
             self.create_product_id()
+        for record in self:
+            record.product_id = product
 
         sale_order = self.env["sale.order"].create(
             {

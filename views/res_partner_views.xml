@@ -18,7 +18,6 @@
       <xpath expr="//button[@name='create_company']" position="replace"></xpath>
       <xpath expr="//page[@name='sales_purchases']" position="replace"></xpath>
 
-
       <!-- Se incluyen para borrar la página sin romper la vista -->
       <xpath expr="//sheet" position="before">
         <header>
@@ -29,6 +28,8 @@
             <span> - </span>
             <field name="team_id" />
           </h3>
+          <field name="tuition_state" widget="statusbar"
+            statusbar_visible="new,requested,confirmed" postition="inside"></field>
         </header>
       </xpath>
 
@@ -50,6 +51,7 @@
           <field name="tuition_ids"></field>
         </page>
       </xpath>
+
 
     </field>
   </record>

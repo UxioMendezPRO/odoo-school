@@ -6,11 +6,11 @@
     <field name="model">tuition.course</field>
     <field name="arch" type="xml">
       <tree string="Tuitions">
-        <field name="price"></field>
-        <field name="validity"></field>
-        <field name="active"></field>
         <field name="student_id"></field>
+        <field name="state"></field>
+        <field name="price"></field>
         <field name="course_id"></field>
+        <field name="validity"></field>
       </tree>
     </field>
   </record>
@@ -20,11 +20,14 @@
     <field name="model">tuition.course</field>
     <field name="arch" type="xml">
       <form string="Tuition">
+        <header>
+          <field name="state" widget="statusbar"
+            statusbar_visible="new,requested,confirmed"></field>
+        </header>
         <sheet>
           <group>
             <field name="price"></field>
             <field name="validity"></field>
-            <field name="active"></field>
             <field name="student_id" widget="many2one"></field>
             <field name="course_id" widget="many2one"></field>
           </group>
@@ -44,8 +47,8 @@
       <search string="Tuitions">
         <field name="price"></field>
         <field name="validity"></field>
-        <field name="active"></field>
         <field name="student_id"></field>
+        <field name="state"></field>
       </search>
     </field>
   </record>

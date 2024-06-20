@@ -12,12 +12,23 @@ class Tuition(models.Model):
         "Validity date",
         default=datetime(day=15, month=6, year=datetime.now().year + 1),
     )
-    active = fields.Boolean("Is active", default=False)
+    state = fields.Selection(
+        [
+            ("new", "New"),
+            ("requested", "Requested"),
+            ("confirmed", "Confirmed"),
+            ("cancelled", "Cancelled"),
+            ("expired", "Expired"),
+        ],
+        default="new",
+        readonly=True,
+    )
     student_id = fields.Many2one("res.partner", string="Student")
     course_id = fields.Many2one("course.course", string="Course", required=True)
     category_id = fields.Many2one("product.category")
     product_id = fields.Many2one("product.product")
     tax_id = fields.Many2one("account.tax", compute="_compute_tax_id")
+    sale_id = fields.Many2one("sale.order")
 
     # Constrain para no tener más de una matrícula activa
     @api.model
@@ -112,6 +123,9 @@ class Tuition(models.Model):
                 ],
             }
         )
+        for record in self:
+            record.state = "requested"
+            record.sale_id = sale_order
 
         return {
             "type": "ir.actions.act_window",

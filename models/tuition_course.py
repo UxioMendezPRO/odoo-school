@@ -114,7 +114,7 @@ class Tuition(models.Model):
                         False,
                         {
                             "product_id": self.product_id.id,
-                            "name": "Tuition",
+                            "name": f"{self.student_id.name}, {self.course_id.name}",
                             "product_uom_qty": 1,
                             "price_unit": self.price,
                             "tax_id": self.tax_id,
@@ -126,6 +126,7 @@ class Tuition(models.Model):
         for record in self:
             record.sale_id = sale_order
             record.state = "requested"
+
         sale_order.tuition_id = self.id
 
         return {

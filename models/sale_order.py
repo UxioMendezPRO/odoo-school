@@ -12,8 +12,9 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        this_tuition = self.env["tuition.course"].browse(vals.get("tuition_id", False))
-        print(this_tuition.id)
+        this_tuition = self.env["tuition.course"].browse(
+            vals.get("tuition_id", False)
+        )  # Todavia no tiene la tuition_id asignada pq no se ha creado la venta
         if this_tuition.sale_id:
             raise UserError("A sale for this tuition already exists")
         return super(SaleOrder, self).create(vals)

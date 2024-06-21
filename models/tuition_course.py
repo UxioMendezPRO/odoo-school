@@ -163,3 +163,4 @@ class Tuition(models.Model):
                 raise UserError(
                     "You can't delete a tuition with a confirmed sale order"
                 )
+        return super(Tuition, self).unlink()

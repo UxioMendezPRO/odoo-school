@@ -45,7 +45,13 @@ class Course(models.Model):
                     if counter > 1:
                         raise UserError("The course already exist")
 
-    @api.depends("total_students")
+    @api.depends("total_students", "tuition_ids")
     def _compute_total_students(self):
         for record in self:
             record.total_students = len(record.tuition_ids)
+
+    def unlink(self):
+        for record in self:
+            if record.total_students > 0:
+                raise UserError("You can not delete a course with students in it")
+        return super(Course, self).unlink()

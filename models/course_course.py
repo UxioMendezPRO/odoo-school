@@ -10,10 +10,9 @@ class Course(models.Model):
     year = fields.Selection(
         string="Year",
         selection=[("First", "First"), ("Second", "Second"), ("Third", "Third")],
-        default="1",
     )
     letter = fields.Selection(
-        string="Class", selection=[("A", "A"), ("B", "B"), ("C", "C")], default="a"
+        string="Class", selection=[("A", "A"), ("B", "B"), ("C", "C")]
     )
     books_id = fields.Many2many("books.course", string="Books")
     tuition_ids = fields.One2many("tuition.course", "course_id", string="Tuitions")
@@ -43,7 +42,6 @@ class Course(models.Model):
             for current_class in class_info:
                 if this_class == current_class:
                     counter += 1
-                    print(counter)
                     if counter > 1:
                         raise UserError("The course already exist")
 
@@ -52,4 +50,5 @@ class Course(models.Model):
         for record in self:
             record.total_students = 0
             for tuition in record.tuition_ids:
-                record.total_students += 1
+                if tuition.state == "confirmed":
+                    record.total_students += 1

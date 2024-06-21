@@ -6,6 +6,7 @@
     <field name="inherit_id" ref="sale.view_order_form" />
     <field name="arch" type="xml">
       <xpath expr="//div[@class='oe_chatter']" position="replace" />
+      <field name="product_uom_qty" readonly="1"></field>
     </field>
   </record>
 </odoo>

@@ -32,10 +32,10 @@
           </group>
           <notebook>
             <page string="Tuitions">
-              <field name="tuition_ids"></field>
+              <field name="tuition_ids" readonly="1"></field>
             </page>
             <page string="Books">
-              <field name="books_id"></field>
+              <field name="books_id" readonly="1"></field>
             </page>
           </notebook>
         </sheet>

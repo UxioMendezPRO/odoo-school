@@ -26,10 +26,10 @@
         </header>
         <sheet>
           <group>
+            <field name="student_id"></field>
+            <field name="course_id"></field>
             <field name="price"></field>
             <field name="validity"></field>
-            <field name="student_id" widget="many2one"></field>
-            <field name="course_id" widget="many2one"></field>
           </group>
         </sheet>
         <footer>

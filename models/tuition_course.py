@@ -1,6 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError
-from datetime import datetime
+from datetime import date, datetime
 
 
 class Tuition(models.Model):
@@ -29,7 +29,7 @@ class Tuition(models.Model):
     product_id = fields.Many2one("product.product")
     tax_id = fields.Many2one("account.tax", compute="_compute_tax_id")
     sale_id = fields.Many2one("sale.order")
-    curdate = fields.Date(compute="_compute_curdate")
+    current_date = fields.Date()
 
     # Constrain para no tener más de una matrícula activa
     @api.model
@@ -42,22 +42,25 @@ class Tuition(models.Model):
                     raise UserError("There is an active tuition")
         return super(Tuition, self).create(vals)
 
-    @api.depends("curdate")
-    def _compute_curdate(self):
-        for record in self:
-            record.curdate = datetime.now().date()
-
     # La fecha debe ser posterior a la actual
     @api.onchange("validity")
     def onchange_validity(self):
         for record in self:
-            if record.validity < record.curdate:
+            if record.validity < record.current_date:
                 raise UserError("Invalid date")
 
-    @api.onchange("curdate")
+    # Actualiza la fecha actual y comprueba la fecha de validez
+    @api.model
+    def cron_update_current_date(self):
+        tuitions = self.search([])
+        today = date.today()
+        for tuition in tuitions:
+            tuition.current_date = today
+
+    @api.onchange("current_date")
     def _check_validity_date(self):
         for record in self:
-            if record.curdate > record.validity:
+            if record.current_date > record.validity:
                 record.state = "expired"
 
     # Crea la categoría del producto

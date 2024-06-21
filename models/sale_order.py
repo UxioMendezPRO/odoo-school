@@ -17,3 +17,5 @@ class SaleOrder(models.Model):
     def action_cancel(self):
         self.tuition_id.state = "cancelled"
         return super(SaleOrder, self).action_cancel()
+
+

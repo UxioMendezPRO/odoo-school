@@ -155,3 +155,11 @@ class Tuition(models.Model):
             "res_id": sale_order.id,
             "target": "current",
         }
+
+    # Restringe el borrado de matrículas con lineas de pedido confirmadas
+    def unlink(self):
+        for record in self:
+            if record.sale_id.state == "sale":
+                raise UserError(
+                    "You can't delete a tuition with a confirmed sale order"
+                )

@@ -17,7 +17,7 @@ class Course(models.Model):
     books_id = fields.Many2many("books.course", string="Books")
     tuition_ids = fields.One2many("tuition.course", "course_id", string="Tuitions")
     total_students = fields.Integer(
-        compute="compute_total_students", string="Total students", store=True
+        compute="_compute_total_students", string="Total students", store=True
     )
 
     @api.model
@@ -46,9 +46,6 @@ class Course(models.Model):
                         raise UserError("The course already exist")
 
     @api.depends("total_students")
-    def compute_total_students(self):
+    def _compute_total_students(self):
         for record in self:
-            record.total_students = 0
-            for tuition in record.tuition_ids:
-                if tuition.state == "confirmed":
-                    record.total_students += 1
+            record.total_students = len(record.tuition_ids)

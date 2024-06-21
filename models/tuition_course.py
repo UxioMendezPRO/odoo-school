@@ -29,7 +29,7 @@ class Tuition(models.Model):
     product_id = fields.Many2one("product.product")
     tax_id = fields.Many2one("account.tax", compute="_compute_tax_id")
     sale_id = fields.Many2one("sale.order")
-    current_date = fields.Date()
+    current_date = fields.Date(default=fields.Date.today())
 
     # Constrain para no tener más de una matrícula activa
     @api.model
@@ -38,7 +38,7 @@ class Tuition(models.Model):
         this_student = self.env["res.partner"].browse(student_id)
         if this_student:
             for tuition in this_student.tuition_ids:
-                if tuition.active:
+                if tuition.state == "confirmed" or tuition.state == "requested":
                     raise UserError("There is an active tuition")
         return super(Tuition, self).create(vals)
 
@@ -95,6 +95,7 @@ class Tuition(models.Model):
         for record in self:
             record.product_id = product
 
+    # Crea el IVA
     @api.depends("tax_id")
     def _compute_tax_id(self):
         tax_id = self.env["account.tax"].create(

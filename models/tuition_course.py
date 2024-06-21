@@ -107,6 +107,8 @@ class Tuition(models.Model):
 
     # Crea la matrícula
     def action_create_tuition(self):
+        if self.sale_id:
+            raise UserError("There is already a sale order for this tuition")
 
         product = self.env["product.product"].search(
             [("name", "=", "Tuition")], limit=1

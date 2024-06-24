@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+  <!-- Actions -->
+
+  <record model="ir.actions.act_window" id="action_total_students_view">
+    <field name="name">Students</field>
+    <field name="res_model">tuition.course</field>
+    <field name="view_mode">tree,form,search,kanban</field>
+    <field name="domain">[('course_id', '=', 'active_id')]</field>
+    <!-- <filter string="Course" name="context" domain="[('state', '=', 'confirmed')]" /> -->
+  </record>
+
+  <!-- views -->
+
   <record id="course_course_view_tree" model="ir.ui.view">
     <field name="name">course.course.view.tree</field>
     <field name="model">course.course</field>
@@ -54,13 +66,5 @@
     </field>
   </record>
 
-  <!-- Actions -->
-
-  <record model="ir.actions.act_window" id="action_total_students_view">
-    <field name="name">Students</field>
-    <field name="res_model">tuition.course</field>
-    <field name="view_mode">tree,form,search,kanban</field>
-    <field name="domain">[('course_id', '=', active_id)]</field>
-  </record>
 
 </odoo>

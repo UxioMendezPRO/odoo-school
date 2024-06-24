@@ -2,6 +2,33 @@
 <odoo>
 
 
+  <!-- Actions -->
+
+
+  <record model="ir.actions.act_window" id="action_student_course_view">
+    <field name="name">Student</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form,search,kanban</field>
+  </record>
+
+  <record model="ir.actions.act_window" id="action_books_course_view">
+    <field name="name">Books</field>
+    <field name="res_model">books.course</field>
+    <field name="view_mode">tree,form,search,kanban</field>
+  </record>
+
+  <record model="ir.actions.act_window" id="action_course_course_view">
+    <field name="name">Course</field>
+    <field name="res_model">course.course</field>
+    <field name="view_mode">tree,form,search,kanban</field>
+  </record>
+
+  <record model="ir.actions.act_window" id="action_tuition_course_view">
+    <field name="name">Tuition</field>
+    <field name="res_model">tuition.course</field>
+    <field name="view_mode">tree,form,search,kanban</field>
+  </record>
+
   <!-- menu items -->
 
   <menuitem
@@ -37,34 +64,6 @@
     parent="student_main_menu"
     action="action_tuition_course_view"
   />
-
-
-  <!-- Actions -->
-
-
-  <record model="ir.actions.act_window" id="action_student_course_view">
-    <field name="name">Student</field>
-    <field name="res_model">res.partner</field>
-    <field name="view_mode">tree,form,search,kanban</field>
-  </record>
-
-  <record model="ir.actions.act_window" id="action_books_course_view">
-    <field name="name">Books</field>
-    <field name="res_model">books.course</field>
-    <field name="view_mode">tree,form,search,kanban</field>
-  </record>
-
-  <record model="ir.actions.act_window" id="action_course_course_view">
-    <field name="name">Course</field>
-    <field name="res_model">course.course</field>
-    <field name="view_mode">tree,form,search,kanban</field>
-  </record>
-
-  <record model="ir.actions.act_window" id="action_tuition_course_view">
-    <field name="name">Tuition</field>
-    <field name="res_model">tuition.course</field>
-    <field name="view_mode">tree,form,search,kanban</field>
-  </record>
 
 
 </odoo>
